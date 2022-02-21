@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Field
 from enum import Enum
-from typing import Optional, List
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
 from typing_extensions import TypedDict
 
 
@@ -26,7 +27,7 @@ class VehicleDTO(TypedDict):
     year: VehicleData
 
 
-class UserInformationDTO(BaseModel):
+class UserProfileDTO(BaseModel):
     age: int = Field(..., ge=0, description="Age must be greater than or equal to 0")
 
     dependents: int = Field(
@@ -47,5 +48,5 @@ class UserInformationDTO(BaseModel):
     )
 
     house: Optional[HouseDTO]
-    
+
     vehicle: Optional[VehicleDTO]
