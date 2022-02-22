@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
-from domain.risk.user_risk import UserRisk
+from domain.risk.user_profile_risk import UserProfileRisk
 from domain.dtos.user_profile import UserProfileDTO
 
 
 class RuleInterface(ABC):
     @abstractmethod
-    def apply_rule(self, request) -> UserRisk:
+    def apply_rule(self, request) -> UserProfileRisk:
         pass
 
 
@@ -24,7 +24,7 @@ class BaseRule(RuleInterface):
         return OtherRule(self)
 
     @abstractmethod
-    def apply_rule(self, user_profile: UserProfileDTO, user_risk: UserRisk) -> UserRisk:
+    def apply_rule(self, user_profile: UserProfileDTO, user_risk: UserProfileRisk) -> UserProfileRisk:
         """Apply rule in a chain setting user_risk based on user_profile
 
         Args:

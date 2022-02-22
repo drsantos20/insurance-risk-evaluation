@@ -1,11 +1,11 @@
 from domain.dtos.user_profile import UserProfileDTO
-from domain.risk.categories.house import HasMotgagedHouse, HasNoHouse
-from domain.risk.user_risk import UserRisk
+from domain.risk.category.house import HasMotgagedHouse, HasNoHouse
+from domain.risk.user_profile_risk import UserProfileRisk
 
 
 def test_motgaged_house():
     # MortgagedHouse
-    user_info = {
+    user_profile = {
         "age": 62,
         "dependents": 2,
         "house": {"ownership_status": "mortgaged"},
@@ -13,8 +13,8 @@ def test_motgaged_house():
         "marital_status": "single",
         "risk_questions": [0, 1, 1],
     }
-    user_dto = UserProfileDTO(**user_info)
-    user_base_risk = UserRisk(user_dto)
+    user_dto = UserProfileDTO(**user_profile)
+    user_base_risk = UserProfileRisk(user_dto)
     rule = HasMotgagedHouse() | HasNoHouse
     risk = rule.apply_rule(user_dto, user_base_risk)
     # User should have 1 score point added to home and disability
@@ -25,7 +25,7 @@ def test_motgaged_house():
 
 
 def test_owned_house():
-    user_info = {
+    user_profile = {
         "age": 62,
         "dependents": 2,
         "income": 1000,
@@ -33,8 +33,8 @@ def test_owned_house():
         "marital_status": "single",
         "risk_questions": [0, 1, 1],
     }
-    user_dto = UserProfileDTO(**user_info)
-    user_base_risk = UserRisk(user_dto)
+    user_dto = UserProfileDTO(**user_profile)
+    user_base_risk = UserProfileRisk(user_dto)
     rule = HasMotgagedHouse() | HasNoHouse
     risk = rule.apply_rule(user_dto, user_base_risk)
     # User should have same scores
@@ -45,15 +45,15 @@ def test_owned_house():
 
 
 def test_no_house():
-    user_info = {
+    user_profile = {
         "age": 62,
         "dependents": 2,
         "income": 1000,
         "marital_status": "single",
         "risk_questions": [0, 1, 1],
     }
-    user_dto = UserProfileDTO(**user_info)
-    user_base_risk = UserRisk(user_dto)
+    user_dto = UserProfileDTO(**user_profile)
+    user_base_risk = UserProfileRisk(user_dto)
     rule = HasMotgagedHouse() | HasNoHouse
     risk = rule.apply_rule(user_dto, user_base_risk)
     # User should not be eligible to home insurance

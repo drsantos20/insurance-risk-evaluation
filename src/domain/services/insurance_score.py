@@ -1,23 +1,23 @@
 from domain.dtos.insurance import InsuranceDTO
 from domain.dtos.user_profile import UserProfileDTO
-from domain.risk.categories.age import (
+from domain.risk.category.age import (
     AgeBetweenThirtyAndForty,
     AgeOverSixty,
     AgeUnderThirty,
 )
-from domain.risk.categories.dependents import HasDependents
-from domain.risk.categories.house import HasMotgagedHouse, HasNoHouse
-from domain.risk.categories.income import HasNoIncome, IncomeEvaluation
-from domain.risk.categories.marital import IsMaried
-from domain.risk.categories.vehicle import HasNoVehicle, HasVehicle
-from domain.risk.user_risk import UserRisk
+from domain.risk.category.dependents import HasDependents
+from domain.risk.category.house import HasMotgagedHouse, HasNoHouse
+from domain.risk.category.income import HasNoIncome, IncomeEvaluation
+from domain.risk.category.marital import IsMaried
+from domain.risk.category.vehicle import HasNoVehicle, HasVehicle
+from domain.risk.user_profile_risk import UserProfileRisk
 
 
-def get_insurance_score(user_info: UserProfileDTO) -> InsuranceDTO:
+def get_insurance_score(user_profile: UserProfileDTO) -> InsuranceDTO:
     """
     Set insurance rules using | pipe operator
     """
-    base_risk = UserRisk(user_info)
+    base_risk = UserProfileRisk(user_profile)
     rules = (
         AgeOverSixty()
         | AgeUnderThirty
@@ -31,5 +31,5 @@ def get_insurance_score(user_info: UserProfileDTO) -> InsuranceDTO:
         | HasNoVehicle
         | HasVehicle
     )
-    risk = rules.apply_rule(user_info, base_risk)
+    risk = rules.apply_rule(user_profile, base_risk)
     return risk.evaluate_risk_category()

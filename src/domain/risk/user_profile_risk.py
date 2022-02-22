@@ -15,14 +15,14 @@ class InsuranceRiskCategory:
         self.is_eligible = is_eligible
 
 
-class UserRisk:
-    """A UserRisk has risk categories for every insurance risk category.
+class UserProfileRisk:
+    """A UserProfileRisk has risk categories for every insurance risk category.
     Risk categories are InsuranceRiskCategory instances.
     """
 
-    def __init__(self, user_info: UserProfileDTO) -> None:
-        # Calculate base risk from user_info risk_questions
-        base_risk = sum([1 if x else 0 for x in user_info.risk_questions])
+    def __init__(self, user_profile: UserProfileDTO) -> None:
+        # Calculate base risk from user_profile risk_questions
+        base_risk = sum([1 if x else 0 for x in user_profile.risk_questions])
 
         self.auto = InsuranceRiskCategory(base_risk, True)
         self.disability = InsuranceRiskCategory(base_risk, True)

@@ -1,18 +1,18 @@
 from domain.dtos.user_profile import UserProfileDTO
-from domain.risk.categories.vehicle import HasNoVehicle, HasVehicle
-from domain.risk.user_risk import UserRisk
+from domain.risk.category.vehicle import HasNoVehicle, HasVehicle
+from domain.risk.user_profile_risk import UserProfileRisk
 
 
 def test_has_no_vehicle():
-    user_info = {
+    user_profile = {
         "age": 62,
         "dependents": 2,
         "income": 0,
         "marital_status": "single",
         "risk_questions": [0, 1, 1],
     }
-    user_dto = UserProfileDTO(**user_info)
-    user_base_risk = UserRisk(user_dto)
+    user_dto = UserProfileDTO(**user_profile)
+    user_base_risk = UserProfileRisk(user_dto)
     rule = HasNoVehicle() | HasVehicle
     risk = rule.apply_rule(user_dto, user_base_risk)
     # User should not be eligible to disability
@@ -24,7 +24,7 @@ def test_has_no_vehicle():
 
 def test_new_vehicle():
     # HasNewVehicle
-    user_info = {
+    user_profile = {
         "age": 62,
         "dependents": 0,
         "income": 220000,
@@ -32,8 +32,8 @@ def test_new_vehicle():
         "risk_questions": [0, 1, 1],
         "vehicle": {"year": 2018},
     }
-    user_dto = UserProfileDTO(**user_info)
-    user_base_risk = UserRisk(user_dto)
+    user_dto = UserProfileDTO(**user_profile)
+    user_base_risk = UserProfileRisk(user_dto)
     rule = HasNoVehicle() | HasVehicle
     risk = rule.apply_rule(user_dto, user_base_risk)
     # All risk lines should be reduced by 1
@@ -44,7 +44,7 @@ def test_new_vehicle():
 
 
 def test_no_rule():
-    user_info = {
+    user_profile = {
         "age": 62,
         "dependents": 0,
         "income": 1000,
@@ -52,8 +52,8 @@ def test_no_rule():
         "risk_questions": [0, 1, 1],
         "vehicle": {"year": 2000},
     }
-    user_dto = UserProfileDTO(**user_info)
-    user_base_risk = UserRisk(user_dto)
+    user_dto = UserProfileDTO(**user_profile)
+    user_base_risk = UserProfileRisk(user_dto)
     rule = HasNoVehicle() | HasVehicle
     risk = rule.apply_rule(user_dto, user_base_risk)
     # User risk should not change

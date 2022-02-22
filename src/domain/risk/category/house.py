@@ -1,21 +1,21 @@
-from domain.risk.categories.base_rule import BaseRule
+from domain.risk.category.base_rule import BaseRule
 from domain.dtos.user_profile import UserProfileDTO
-from domain.risk.user_risk import UserRisk
+from domain.risk.user_profile_risk import UserProfileRisk
 
 
 class HasNoHouse(BaseRule):
-    def apply_rule(self, user_info: UserProfileDTO, user_risk: UserRisk) -> UserRisk:
-        if not user_info.house:
+    def apply_rule(self, user_profile: UserProfileDTO, user_risk: UserProfileRisk) -> UserProfileRisk:
+        if not user_profile.house:
             user_risk.home.is_eligible = False
-        return super().apply_rule(user_info, user_risk)
+        return super().apply_rule(user_profile, user_risk)
 
 
 class HasMotgagedHouse(BaseRule):
-    def apply_rule(self, user_info: UserProfileDTO, user_risk: UserRisk) -> UserRisk:
-        if not user_info.house:
-            return super().apply_rule(user_info, user_risk)
+    def apply_rule(self, user_profile: UserProfileDTO, user_risk: UserProfileRisk) -> UserProfileRisk:
+        if not user_profile.house:
+            return super().apply_rule(user_profile, user_risk)
 
-        if user_info.house["ownership_status"] == "mortgaged":
+        if user_profile.house["ownership_status"] == "mortgaged":
             user_risk.disability.risk += 1
             user_risk.home.risk += 1
-        return super().apply_rule(user_info, user_risk)
+        return super().apply_rule(user_profile, user_risk)

@@ -1,10 +1,10 @@
 from domain.dtos.user_profile import UserProfileDTO
-from domain.risk.categories.age import (
+from domain.risk.category.age import (
     AgeBetweenThirtyAndForty, 
     AgeOverSixty,
     AgeUnderThirty,
 )
-from domain.risk.user_risk import UserRisk
+from domain.risk.user_profile_risk import UserProfileRisk
 
 
 def test_age_over_sixty():
@@ -16,7 +16,7 @@ def test_age_over_sixty():
         "risk_questions": [0, 1, 1],
     }
     user1_dto = UserProfileDTO(**profile_data)
-    user1_base_risk = UserRisk(user1_dto)
+    user1_base_risk = UserProfileRisk(user1_dto)
     rule = AgeOverSixty() | AgeBetweenThirtyAndForty | AgeUnderThirty
     risk = rule.apply_rule(user1_dto, user1_base_risk)
     # Should not be eligible to life nor disability
@@ -35,7 +35,7 @@ def test_age_under_thirty():
         "risk_questions": [0, 1, 1],
     }
     user2_dto = UserProfileDTO(**profile_data)
-    user2_base_risk = UserRisk(user2_dto)
+    user2_base_risk = UserProfileRisk(user2_dto)
     rule = AgeOverSixty() | AgeBetweenThirtyAndForty | AgeUnderThirty
     risk = rule.apply_rule(user2_dto, user2_base_risk)
     # Should have 2 risk points reduced in all lines
@@ -54,7 +54,7 @@ def test_age_between_thirty_and_forty():
         "risk_questions": [0, 1, 1],
     }
     user3_dto = UserProfileDTO(**profile_data)
-    user3_base_risk = UserRisk(user3_dto)
+    user3_base_risk = UserProfileRisk(user3_dto)
     rule = AgeOverSixty() | AgeBetweenThirtyAndForty | AgeUnderThirty
     risk = rule.apply_rule(user3_dto, user3_base_risk)
     # Should 1 risk point reduced in all lines
@@ -73,7 +73,7 @@ def test_age_no_rule():
         "risk_questions": [0, 1, 1],
     }
     user4_dto = UserProfileDTO(**user4_info)
-    user4_base_risk = UserRisk(user4_dto)
+    user4_base_risk = UserProfileRisk(user4_dto)
     rule = AgeOverSixty() | AgeBetweenThirtyAndForty | AgeUnderThirty
     risk = rule.apply_rule(user4_dto, user4_base_risk)
     # Should have the same base score
