@@ -13,15 +13,25 @@ docker
 ```
 cd insurance-risk-evaluation
 docker-compose up -d --build
+```
 
+or
+
+```
+make start
 ```
 
 ## 📋&nbsp; Testing
 
 ```
 docker-compose exec web pytest .
-
 ````
+
+or
+
+```
+make test
+```
 
 ## 📪&nbsp; API Resources
 
