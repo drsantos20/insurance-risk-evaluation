@@ -1,5 +1,5 @@
+from domain.dtos.insurance import InsuranceDTO, ScoreEnum
 from domain.dtos.user_profile import UserProfileDTO
-from domain.dtos.insurance import ScoreEnum, InsuranceDTO
 
 
 class InsuranceRiskCategory:
