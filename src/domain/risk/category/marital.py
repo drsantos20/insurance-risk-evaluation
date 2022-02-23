@@ -1,5 +1,5 @@
-from domain.risk.category.base_rule import BaseRule
 from domain.dtos.user_profile import UserProfileDTO
+from domain.risk.category.base_rule import BaseRule
 from domain.risk.user_profile_risk import UserProfileRisk
 
 

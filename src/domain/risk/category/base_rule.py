@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from domain.risk.user_profile_risk import UserProfileRisk
+
 from domain.dtos.user_profile import UserProfileDTO
+from domain.risk.user_profile_risk import UserProfileRisk
 
 
 class RuleInterface(ABC):

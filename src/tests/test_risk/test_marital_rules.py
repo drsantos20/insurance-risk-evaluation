@@ -1,6 +1,6 @@
 from domain.dtos.user_profile import UserProfileDTO
-from domain.risk.user_profile_risk import UserProfileRisk
 from domain.risk.category.marital import IsMaried
+from domain.risk.user_profile_risk import UserProfileRisk
 
 
 def test_is_maried():
