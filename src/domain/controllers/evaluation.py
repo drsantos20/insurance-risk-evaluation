@@ -8,5 +8,5 @@ router = APIRouter(prefix="/insurance", tags=["insurance"])
 
 
 @router.post("/evaluation", response_model=InsuranceDTO)
-async def evaluation_risk(user_information: UserProfileDTO):
-    return insurance_score.get_insurance_score(user_information)
+async def evaluation_risk(user_profilermation: UserProfileDTO):
+    return insurance_score.get_insurance_score(user_profilermation)

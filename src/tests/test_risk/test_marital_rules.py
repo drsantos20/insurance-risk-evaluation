@@ -1,18 +1,18 @@
 from domain.dtos.user_profile import UserProfileDTO
-from domain.risk.user_risk import UserRisk
-from domain.risk.categories.marital import IsMaried
+from domain.risk.user_profile_risk import UserProfileRisk
+from domain.risk.category.marital import IsMaried
 
 
 def test_is_maried():
-    user_info = {
+    user_profile = {
         "age": 62,
         "dependents": 2,
         "income": 0,
         "marital_status": "married",
         "risk_questions": [0, 1, 1],
     }
-    user_dto = UserProfileDTO(**user_info)
-    user_base_risk = UserRisk(user_dto)
+    user_dto = UserProfileDTO(**user_profile)
+    user_base_risk = UserProfileRisk(user_dto)
     rule = IsMaried()
     risk = rule.apply_rule(user_dto, user_base_risk)
     # User should not be eligible to disability
@@ -23,15 +23,15 @@ def test_is_maried():
 
 
 def test_is_single():
-    user_info = {
+    user_profile = {
         "age": 62,
         "dependents": 0,
         "income": 1000,
         "marital_status": "single",
         "risk_questions": [0, 1, 1],
     }
-    user_dto = UserProfileDTO(**user_info)
-    user_base_risk = UserRisk(user_dto)
+    user_dto = UserProfileDTO(**user_profile)
+    user_base_risk = UserProfileRisk(user_dto)
     rule = IsMaried()
     risk = rule.apply_rule(user_dto, user_base_risk)
     # User risk should not change
